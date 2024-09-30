@@ -1,0 +1,100 @@
+<%- include("partials/header.ejs") %>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>UV Info</title>
+        <link rel="stylesheet" href="/styles/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container">
+            <h2 id="heading">UV Index Data in <%=location%> on <%=date%>
+            </h2>
+            <div class="flexbox">
+                <div class="one box">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>UV Index</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0;i<content.length;i++) {%>
+                                <tr>
+                                    <td>
+                                        <% let result=content[i].uv_time.match(/\d\d:\d\d/); %>
+                                            <%= result %>
+                                    </td>
+                                    <td>
+                                        <%= content[i].uv %>
+                                    </td>
+                                </tr>
+                                <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="fixit two box">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Sun Position</th>
+                                <th>Sun Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% for (const property in sundata) { %>
+                                <tr>
+                                    <td>
+                                        <%= property %>
+                                    </td>
+                                    <td>
+                                        <% let result=sundata[property].match(/\d\d:\d\d/); %>
+                                            <%= result %>
+                                    </td>
+                                </tr>
+                                <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="three box">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Skin Type</th>
+                                <th>Safe Exposure Time till burn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% for (const property in skintype) { %>
+                                <tr>
+                                    <td>
+                                        <%= property %>
+                                    </td>
+                                    <td>
+                                        <% if(skintype[property] == null) { %>
+                                            NULL
+                                        <%} else {%>
+                                            <%= skintype[property] %> minutes
+                                        <%}%>
+                                    </td>
+                                </tr>
+                                <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+    </html>
+    <%- include("partials/footer.ejs") %>
